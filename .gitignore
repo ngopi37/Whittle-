@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+
+# Tooling caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Local runtime state (runs, checkpoints, license) — never committed
+.sg2/
+
+# Local project files a user creates while exercising the CLI
+*.gguf
+*.pt
+project.json
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,8 @@
+name: 500M
+target_parameters: 500000000
+vocabulary_size: 32000
+context_length: 2048
+layers: 24
+hidden_size: 1024
+attention_heads: 16
+ffn_multiplier: 4.0

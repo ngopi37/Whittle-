@@ -1,0 +1,8 @@
+name: 20M
+target_parameters: 20000000
+vocabulary_size: 16000
+context_length: 512
+layers: 6
+hidden_size: 256
+attention_heads: 8
+ffn_multiplier: 4.0

@@ -1,0 +1,8 @@
+name: 100M
+target_parameters: 100000000
+vocabulary_size: 32000
+context_length: 1024
+layers: 12
+hidden_size: 512
+attention_heads: 8
+ffn_multiplier: 4.0

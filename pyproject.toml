@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sg2-on-device-model-builder"
+version = "0.1.0"
+description = "Hardware-aware, offline-first on-device model engineering tools."
+requires-python = ">=3.12"
+# torch and llama-cpp-python are heavy (hundreds of MB); install with:
+#   pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+# to get the CPU-only torch wheel instead of a CUDA-bundled one. Both stay
+# core dependencies (not an extra) because pretrain/model-init and the GGUF
+# quantize/package/on-device-smoke-test stages are part of the free local
+# pipeline, not an opt-in feature.
+dependencies = [
+    "pydantic>=2.7",
+    "psutil>=5.9",
+    "PyYAML>=6.0",
+    "tokenizers>=0.20,<1.0",
+    "pyarrow>=17.0",
+    "gguf>=0.10",
+    "torch>=2.2",
+    "llama-cpp-python>=0.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10"]
+
+[project.scripts]
+sg2-model = "apps.cli.main:main"
+
+[tool.setuptools.packages.find]
+include = ["apps*", "core*", "schemas*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "TRY", "RUF"]
+ignore = ["TRY003"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
+namespace_packages = true
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+disallow_untyped_calls = false

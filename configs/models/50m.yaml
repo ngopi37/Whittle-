@@ -1,0 +1,8 @@
+name: 50M
+target_parameters: 50000000
+vocabulary_size: 24000
+context_length: 1024
+layers: 8
+hidden_size: 384
+attention_heads: 8
+ffn_multiplier: 4.0
