@@ -11,7 +11,7 @@ shared model registry, fleet deployment, teams, and governance. See
 
 ## Status
 
-The full local pipeline (P1–P5) is shipped end to end — raw text in, a working
+The full local pipeline is shipped end to end — raw text in, a working
 on-device package out — for the **GGUF/llama.cpp** runtime target. ExecuTorch and
 TFLite/Core ML are deliberately deferred (different, heavy toolchains; see
 [docs/runtime-targets.md](docs/runtime-targets.md)), not silently missing. See
