@@ -44,9 +44,8 @@ cost.
   first's saved step rather than restarting at zero.
   `tests/unit/test_pretrain.py` additionally exercises the real worker subprocess
   end to end.
-- Local training of models ≤ 100M is free. Remote / multi-GPU training is gated by
-  the `remote-training` feature (`--remote`) — not implemented; `--remote` on
-  `pretrain` today just raises `FeatureNotAvailable` on the free edition.
+- Local training of models ≤ 100M is free. Remote / multi-GPU training is part of
+  the Pro/Enterprise roadmap, gated by the `remote-training` feature (`--remote`).
 - Resource feasibility comes from `core.sizing` using the project's own
   `TrainingConfig`; run `project refresh` after changing training knobs.
 
