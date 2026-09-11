@@ -37,13 +37,13 @@ def _detect(result_queue: queue.Queue[object]) -> None:
 def main() -> None:
     """Launch the local hardware recommendation screen."""
     root = tk.Tk()
-    root.title("SG2 On-Device Model Builder")
+    root.title("Whittle")
     root.geometry("900x640")
     frame = ttk.Frame(root, padding=24)
     frame.pack(fill="both", expand=True)
 
     ttk.Label(
-        frame, text="SG2 On-Device Model Builder", font=("Segoe UI", 18, "bold")
+        frame, text="Whittle", font=("Segoe UI", 18, "bold")
     ).pack(anchor="w")
     edition = resolve_entitlements().edition.value
     ttk.Label(frame, text=f"Edition: {edition}").pack(anchor="w", pady=(2, 12))
