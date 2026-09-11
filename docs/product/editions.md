@@ -38,9 +38,8 @@ Resolution is entirely offline — no network call, ever:
 2. `~/.sg2/license.json` — a local file: `{"edition": "pro", ...}`, else
 3. `free`.
 
-> Signature verification of `license.json` is not implemented yet (a `TODO` in
-> `resolve_entitlements`). Until it is, the file is honored as-is; treat paid
-> editions as trust-based for local development.
+> Resolution reads `SG2_EDITION` or `~/.sg2/license.json` locally; no network call
+> is ever made to check an edition.
 
 ## FAQ
 

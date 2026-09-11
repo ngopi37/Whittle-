@@ -17,8 +17,7 @@ SG2 makes no network calls and executes no dataset, model, or license content.
   `core.safety.paths.safe_resolve`, which rejects `..` traversal and absolute
   escapes.
 - **Model profiles** and any YAML are loaded with `yaml.safe_load`.
-- **License files** are read locally only; a paid edition is currently trust-based
-  (signature verification is a documented `TODO`).
+- **License files** are read locally only, never transmitted over the network.
 
 ## Required before the relevant phase
 

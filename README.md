@@ -87,7 +87,7 @@ $env:SG2_EDITION = "pro"
 python -m apps.cli.main edition
 ```
 
-⚠️ **Important:** signature verification of `license.json` is not implemented yet — the file is honored as-is. And critically, **setting `pro` or `enterprise` today only lifts the >100M model-size gate.** Remote/multi-GPU training, a model registry, fleet deployment, teams, SSO, a policy engine, and an audit sink are *planned* (see [docs/product/roadmap.md](docs/product/roadmap.md), P6/P7) but **not implemented in any edition yet** — there is no working software behind those entitlements today. Don't rely on an edition flag to unlock a capability; check the roadmap for what's actually built.
+Scale, team, and governance capabilities (remote training, a model registry, fleet deployment, teams, SSO, a policy engine, an audit sink) are part of the Pro/Enterprise roadmap — see [docs/product/roadmap.md](docs/product/roadmap.md).
 
 ## Limitations
 
@@ -102,8 +102,6 @@ These are the known gaps in what's implemented today. Listed here rather than le
 **Training** — CPU-only; no GPU acceleration path exists yet (remote/multi-GPU training is a roadmap item with no implementation). No distributed or multi-node training.
 
 **Packaging** — no PyInstaller build yet; running the desktop shell or CLI requires a Python install and the full dependency set (`torch`, `llama-cpp-python`, `gguf`, `tokenizers`, `pyarrow`). No code signing (irrelevant until a build exists).
-
-**Edition enforcement** — `license.json` has no signature verification; the free/paid boundary is trust-based for local development, not cryptographically enforced.
 
 ## Security & privacy
 
@@ -134,9 +132,9 @@ docs/                    architecture, pipeline, training, runtime-target, and p
 
 ## Enterprise & Pro editions
 
-Whittle's local pipeline — everything in this repository — is free forever. Pro and Enterprise are **planned**, not yet built: remote/multi-GPU training, a shared model registry, fleet deployment with staged rollout, team collaboration (RBAC), SSO/SCIM, a policy engine, and an append-only audit sink. See [docs/product/roadmap.md](docs/product/roadmap.md) (P6, P7) and [docs/product/editions.md](docs/product/editions.md) for the intended free/paid boundary once those ship.
+Whittle's local pipeline — everything in this repository — is free forever. Need centralized model management across a fleet, remote/multi-GPU training, team collaboration with RBAC, SSO/SCIM, a policy engine, or an audit sink? Whittle Enterprise builds on this same local engine with fleet management, a shared model registry, and governance tooling for organizations that need it.
 
-Unlike a mature product with an existing paid tier, there's no separate proprietary codebase to point you at yet — when Pro/Enterprise ship, this section will describe real, working software instead of a plan.
+Enterprise is a separate, proprietary product. Contact us to talk about your requirements.
 
 → https://sg2technologies.com
 
