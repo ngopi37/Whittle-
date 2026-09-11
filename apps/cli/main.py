@@ -24,7 +24,7 @@ _FIT_LIST = TypeAdapter(list[FitResult])
 
 def build_parser() -> argparse.ArgumentParser:
     """Build the command parser."""
-    parser = argparse.ArgumentParser(prog="sg2-model")
+    parser = argparse.ArgumentParser(prog="whittle")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     subparsers.add_parser("hardware", help="show detected hardware")

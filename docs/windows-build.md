@@ -9,7 +9,7 @@ than P1's; budget time for that in whatever ships this first.
 
 ## Planned build notes
 
-- **Two entry points:** `apps/cli/main.py` (`sg2-model`) and `apps/desktop/main.py`.
+- **Two entry points:** `apps/cli/main.py` (`whittle`) and `apps/desktop/main.py`.
   A one-folder build keeps startup fast and lets the model catalog / configs ship as
   data files.
 - **Data files:** bundle `configs/models/*.yaml` (`--add-data`) — `core.catalog`
