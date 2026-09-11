@@ -19,7 +19,7 @@ This repository is the Free edition: the CLI (`apps/cli`), the desktop shell (`a
 - **GGUF quantization** — `fp16`, `q8_0` (default), or `q4_0`, using the `gguf` package's own reference quantization kernels — the same ones llama.cpp's own conversion scripts use, not a hand-rolled approximation
 - **Packaging & on-device smoke test** — bundles the quantized model plus a manifest into one `.zip`, then actually loads it with real `llama.cpp` (via `llama-cpp-python`) and generates tokens — proof the file works on a real runtime, not just that the exporter didn't crash
 - **Local run tracking** — every pipeline run gets its own directory (`.sg2/runs/<run-id>/`) with an append-only event log and every produced artifact recorded with a sha256 hash
-- **Offline edition resolution** — no network call, ever; reads `SG2_EDITION` or a local `~/.sg2/license.json`
+- **Offline license verification** — no account, no network call, ever
 
 ## Installation
 
@@ -74,20 +74,13 @@ Each `--stage` shares one run, so later stages see earlier stages' artifacts aut
 
 See [docs/pipeline.md](docs/pipeline.md) for the stage architecture and [docs/training.md](docs/training.md) / [docs/runtime-targets.md](docs/runtime-targets.md) for what each stage actually does.
 
-## Configuring policy: editions
+## Editions
 
-Resolved entirely offline — no account, no network call:
-
-1. the `SG2_EDITION` environment variable (`free` | `pro` | `enterprise`), else
-2. a local `~/.sg2/license.json` file (`{"edition": "pro", ...}`), else
-3. `free`.
+Local pipeline features are free, always. Scale, team, and governance capabilities (remote training, a model registry, fleet deployment, teams, SSO, a policy engine, an audit sink) are part of the Pro/Enterprise roadmap — see [docs/product/roadmap.md](docs/product/roadmap.md). Edition checks are entirely offline and cryptographically verified — no account, no network call. Contact info@sg2technologies.com for a license.
 
 ```powershell
-$env:SG2_EDITION = "pro"
 python -m apps.cli.main edition
 ```
-
-Scale, team, and governance capabilities (remote training, a model registry, fleet deployment, teams, SSO, a policy engine, an audit sink) are part of the Pro/Enterprise roadmap — see [docs/product/roadmap.md](docs/product/roadmap.md).
 
 ## Limitations
 
@@ -110,25 +103,6 @@ These are the known gaps in what's implemented today. Listed here rather than le
 - Local run history (`.sg2/runs/`) and pretraining checkpoints (`.sg2/checkpoints/`) are plain local files; delete them like any other local directory.
 - Dataset content is always treated as data, never executed — JSONL/Parquet is parsed, not evaluated, and file paths go through `core.safety.paths.safe_resolve` to reject path traversal.
 - No account, sign-in, or license is required to build, run, or use the Free edition.
-
-## Project layout
-
-```
-apps/cli/               the CLI entry point (thin presentation over core)
-apps/desktop/           the Tkinter desktop shell
-core/hardware/          measured hardware profiling
-core/sizing/             hardware-aware resource sizing and recommendations
-core/catalog.py          the model-size catalog (20M-500M), YAML-backed
-core/editions.py         offline edition/entitlement resolution
-core/pipeline/           the Stage interface, RunStore, orchestrator, stage registry
-core/pipeline/stages/     one module per pipeline stage (data-ingest, tokenizer-train, ...)
-core/pipeline/workers/    out-of-process workers (pretrain's training loop)
-core/training/           the model architecture and dataset tokenization
-core/runtime/             GGUF export
-schemas/                 cross-module Pydantic contracts (hardware, model, pipeline)
-configs/models/          the YAML model-size catalog
-docs/                    architecture, pipeline, training, runtime-target, and product docs
-```
 
 ## Enterprise & Pro editions
 

@@ -15,7 +15,7 @@ collaboration, and enterprise governance.
 |---|:--:|:--:|:--:|
 | Hardware profiling & sizing | ✅ | ✅ | ✅ |
 | Local pipeline: data → tokenizer → train → eval → quantize → package → smoke test | ✅ | ✅ | ✅ |
-| Runtime targets: GGUF/llama.cpp, ExecuTorch, TFLite/Core ML | ✅ | ✅ | ✅ |
+| Runtime targets: GGUF/llama.cpp (ExecuTorch, TFLite/Core ML planned) | ✅ | ✅ | ✅ |
 | Model sizes ≤ 100M | ✅ | ✅ | ✅ |
 | Model sizes > 100M (200M, 500M, …) | — | ✅ | ✅ |
 | Remote / multi-GPU training | — | ✅ | ✅ |
@@ -32,14 +32,10 @@ appears in stage plans and license files.
 
 ## How an edition is resolved
 
-Resolution is entirely offline — no network call, ever:
-
-1. `SG2_EDITION` environment variable (`free` | `pro` | `enterprise`), else
-2. `~/.sg2/license.json` — a local file: `{"edition": "pro", ...}`, else
-3. `free`.
-
-> Resolution reads `SG2_EDITION` or `~/.sg2/license.json` locally; no network call
-> is ever made to check an edition.
+Resolution is entirely offline and cryptographically verified — no network call,
+ever, and no account. A paid edition is granted only by a license file we issue;
+see `core.editions.resolve_entitlements` and `core.licensing` for the mechanism.
+Contact info@sg2technologies.com for a license.
 
 ## FAQ
 
