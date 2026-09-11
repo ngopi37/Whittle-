@@ -126,4 +126,4 @@ Licensed under the Apache License, Version 2.0. You may use, modify, and redistr
 
 ## Author
 
-Gopi Narayanaswamy — [github.com/ngopi37](https://github.com/ngopi37)
+Gopi Narayanaswamy — [github.com/ngopi37](https://github.com/ngopi37) — [gopinarayanaswamy.consulting](https://gopinarayanaswamy.consulting/)
