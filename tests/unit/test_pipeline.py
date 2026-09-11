@@ -88,5 +88,6 @@ def test_run_store_lists_runs(tmp_path) -> None:
     assert {r.project_name for r in store.list_runs()} == {"a", "b"}
 
 
-def test_entitlements_pro_unlocks_large_models() -> None:
-    assert resolve_entitlements(env={"SG2_EDITION": "pro"}).edition is Edition.PRO
+def test_entitlements_pro_unlocks_large_models(sign_test_license) -> None:
+    license_path = sign_test_license("pro")
+    assert resolve_entitlements(env={}, license_path=license_path).edition is Edition.PRO

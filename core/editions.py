@@ -3,8 +3,12 @@
 The philosophy is *local free; scale, team, and governance paid*. Everything that runs
 on a single machine is in the free edition. Paid editions unlock remote/distributed
 training, a hosted model registry, fleet deployment, team collaboration, and enterprise
-governance. Resolution is entirely offline: an environment variable or a local license
-file, never a network call.
+governance. Resolution is entirely offline and cryptographically verified — see
+``core.licensing`` — never a network call.
+
+``SG2_EDITION`` can only ever force the *free* edition locally (useful for testing
+free-tier behavior even when a real license is present); it cannot grant a paid
+edition — only a validly signed, unexpired license file can.
 """
 
 from __future__ import annotations
@@ -14,6 +18,8 @@ import os
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
+
+from core.licensing import is_expired, verify_license
 
 LICENSE_PATH = Path.home() / ".sg2" / "license.json"
 
@@ -125,10 +131,12 @@ def _edition_from_name(value: str | None) -> Edition | None:
 
 
 def _edition_from_license(path: Path) -> Edition | None:
-    """Read the edition from a local license file if present and well formed.
+    """Read the edition from a local license file, if present, signed, and unexpired.
 
-    Signature verification is intentionally deferred (TODO: verify an offline-issued
-    signature before honoring a paid edition). No network access is ever performed.
+    A file that is missing, malformed, unsigned, tampered with, or expired is
+    treated exactly like no license file at all. No network access is ever
+    performed — verification is entirely local, against the public key in
+    ``core.licensing``.
     """
     try:
         raw = json.loads(path.read_text(encoding="utf-8"))
@@ -136,16 +144,24 @@ def _edition_from_license(path: Path) -> Edition | None:
         return None
     if not isinstance(raw, dict):
         return None
+    if not verify_license(raw) or is_expired(raw):
+        return None
     return _edition_from_name(raw.get("edition"))
 
 
 def resolve_entitlements(
     *, env: dict[str, str] | None = None, license_path: Path | None = None
 ) -> Entitlements:
-    """Resolve the active entitlements from the environment or a local license file."""
+    """Resolve the active entitlements from a signed license file, or the environment.
+
+    ``SG2_EDITION`` is checked first, but only ever to force *free*; any other
+    value is ignored (it grants nothing on its own). Paid editions come only from
+    ``_edition_from_license``.
+    """
     environment = os.environ if env is None else env
-    edition = _edition_from_name(environment.get("SG2_EDITION"))
-    if edition is None:
+    if _edition_from_name(environment.get("SG2_EDITION")) is Edition.FREE:
+        edition: Edition | None = Edition.FREE
+    else:
         edition = _edition_from_license(license_path or LICENSE_PATH)
     if edition is None:
         edition = Edition.FREE
