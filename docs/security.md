@@ -2,6 +2,16 @@
 
 SG2 makes no network calls and executes no dataset, model, or license content.
 
+**"No network call" is a tested claim, not just an assertion.**
+`tests/unit/test_no_network.py` runs the real pipeline — data-ingest through a
+real `llama.cpp` load and generation — with the actual socket-level `connect`/
+`connect_ex`/`getaddrinfo` primitives patched to raise immediately on any
+outbound attempt (`tests/network_guard.py`). It patches the primitives every
+network client ultimately goes through, not one specific HTTP library, so it
+catches an unexpected network call from any dependency, not just the ones this
+project already knows about. A separate test proves the guard itself isn't a
+silent no-op by making it catch a real connection attempt.
+
 ## Current guarantees
 
 - **Subprocesses** use argument arrays (never a shell). The hardware profiler runs

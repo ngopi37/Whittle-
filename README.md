@@ -100,7 +100,7 @@ These are the known gaps in what's implemented today. Listed here rather than le
 
 ## Security & privacy
 
-- Everything runs on-device — no training data, model weights, or telemetry is ever sent anywhere. There is no server component and no phone-home.
+- Everything runs on-device — no training data, model weights, or telemetry is ever sent anywhere. There is no server component and no phone-home. This is a tested claim, not just an assertion: `tests/unit/test_no_network.py` runs the real pipeline with outbound sockets and DNS resolution patched to raise on any attempt — see [docs/security.md](docs/security.md).
 - Edition/license resolution is entirely offline: an environment variable or a local file, never a network call.
 - Local run history (`.sg2/runs/`) and pretraining checkpoints (`.sg2/checkpoints/`) are plain local files; delete them like any other local directory.
 - Dataset content is always treated as data, never executed — JSONL/Parquet is parsed, not evaluated, and file paths go through `core.safety.paths.safe_resolve` to reject path traversal.
