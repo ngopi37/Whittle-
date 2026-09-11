@@ -9,11 +9,15 @@ description = "Hardware-aware, offline-first on-device model engineering tools."
 license = "Apache-2.0"
 requires-python = ">=3.12"
 # torch and llama-cpp-python are heavy (hundreds of MB); install with:
-#   pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
-# to get the CPU-only torch wheel instead of a CUDA-bundled one. Both stay
-# core dependencies (not an extra) because pretrain/model-init and the GGUF
-# quantize/package/on-device-smoke-test stages are part of the free local
-# pipeline, not an opt-in feature.
+#   pip install -e ".[dev]" \
+#     --extra-index-url https://download.pytorch.org/whl/cpu \
+#     --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+# The first gets the CPU-only torch wheel instead of a CUDA-bundled one. The
+# second is required on Windows: plain PyPI has no prebuilt llama-cpp-python
+# wheel there, and its sdist build fails on Windows path-length limits. Both
+# packages stay core dependencies (not an extra) because pretrain/model-init
+# and the GGUF quantize/package/on-device-smoke-test stages are part of the
+# free local pipeline, not an opt-in feature.
 dependencies = [
     "pydantic>=2.7",
     "psutil>=5.9",

@@ -23,12 +23,14 @@ This repository is the Free edition: the CLI (`apps/cli`), the desktop shell (`a
 
 ## Installation
 
-Requires Python 3.12+. `torch` and `llama-cpp-python` are heavy (hundreds of MB) — use the CPU-only torch wheel unless you specifically want CUDA:
+Requires Python 3.12+. `torch` and `llama-cpp-python` are heavy (hundreds of MB). Both extra index URLs below are required on Windows — plain PyPI has no prebuilt `llama-cpp-python` wheel for Windows, and its source build fails on Windows path-length limits; the second index is where its maintainer publishes prebuilt Windows wheels:
 
 ```powershell
 git clone https://github.com/ngopi37/Whittle-.git
 cd Whittle-
-python -m pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+python -m pip install -e ".[dev]" `
+  --extra-index-url https://download.pytorch.org/whl/cpu `
+  --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
 ```
 
 There's no pre-built installer yet — see [Limitations](#limitations) below. Everything runs from source on Windows, Linux, and macOS (the hardware profiler degrades gracefully off Windows; the local pipeline itself has no OS-specific code).
